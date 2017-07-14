@@ -1,4 +1,4 @@
-package org.factory.design;
+package org.log;
 
 /**
  * Hello world!
