@@ -4,10 +4,8 @@ public interface Factory {
 
 	public void initFactory(Context appContext);
 
-	public void destroyContext();
+	public Object createObject(Class<?> classType);
 
-	public interface Creator<T> {
-		public T createObject();
-	}
+	public void destroyContext();
 
 }

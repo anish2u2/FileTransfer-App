@@ -1,21 +1,20 @@
 package org.factory.design.impl.creational;
 
-import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.factory.design.abstracts.patterns.creational.AbstractFactoryPattern;
-import org.factory.design.config.elements.FactoryConfig;
+import org.factory.design.annotations.Component;
+import org.factory.design.annotations.Inject;
 import org.factory.design.contracts.Context;
-import org.factory.design.utility.AppConstant;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.RegexPatternTypeFilter;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
+import org.factory.design.utility.reflect.Util;
 
-@Component("factoryPattern")
+@Component(name = "factoryPattern")
 public class FactoryPatternImpl extends AbstractFactoryPattern {
 
+	private Map<Class<?>, Object> instanceHolder = new WeakHashMap<Class<?>, Object>();
+
+	@Inject(qualifier = "factoryContext")
 	private Context context;
 
 	public FactoryPatternImpl() {
@@ -38,25 +37,17 @@ public class FactoryPatternImpl extends AbstractFactoryPattern {
 
 	@Override
 	protected Object initObject(Class<?> classTypeObject) {
-
-		return null;
-	}
-
-	public Class<?>[] getAllComposingComponentClasses(Class<?> composingClass) {
+		Object targetObject = null;
 		try {
-			final ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
-					false);
-			provider.addIncludeFilter(new RegexPatternTypeFilter(Pattern.compile(".*")));
-			String packageName = ((FactoryConfig) context.get(AppConstant.APP_CONFIG)).getComponentScan()
-					.getPackageName();
-			final Set<BeanDefinition> beanDefinitions = provider.findCandidateComponents(packageName);
-			for (BeanDefinition bean : beanDefinitions) {
-				Class<?> clazz = Class.forName(bean.getBeanClassName());
+			if (instanceHolder.containsKey(classTypeObject)) {
+				return instanceHolder.get(classTypeObject);
 			}
+			targetObject = Util.createObject(classTypeObject);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return null;
+
+		return targetObject;
 	}
 
 	@Override

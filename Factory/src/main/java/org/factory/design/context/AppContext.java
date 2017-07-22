@@ -4,11 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.factory.design.contracts.Context;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 
-@Component("factoryContext")
+/*
+ *@author Anish Singh
+ *
+ * This class will be used as a context for the current flow(i.e for current thread).
+ * 
+ * further release we will make it for current thread.  
+ */
+
 public class AppContext implements Context {
-	
+
 	private Map<Object, Object> context;
 
 	private static Context appContext;
@@ -17,6 +24,7 @@ public class AppContext implements Context {
 		context = new HashMap<Object, Object>();
 	}
 
+	@Bean(name = "factoryContext")
 	public static Context createInstance() {
 		if (appContext == null)
 			appContext = new AppContext();

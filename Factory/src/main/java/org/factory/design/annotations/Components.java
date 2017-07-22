@@ -22,6 +22,6 @@ public @interface Components {
 
 	DesignType getDesignType() default DesignType.CREATIONAL;
 
-	Class<?> compositClass() default Object.class;
+	Class<?> compositClass();
 
 }

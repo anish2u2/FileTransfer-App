@@ -1,10 +1,10 @@
 package org.factory.design.impl.creational;
 
 import org.factory.design.abstracts.patterns.creational.CompositAbstractFactoryPattern;
+import org.factory.design.annotations.Component;
 import org.factory.design.contracts.Context;
-import org.springframework.stereotype.Component;
 
-@Component("abstractFactory")
+@Component(name = "abstractFactory")
 public class AbstractFactoryPatternImpl extends CompositAbstractFactoryPattern {
 
 	private Context context;

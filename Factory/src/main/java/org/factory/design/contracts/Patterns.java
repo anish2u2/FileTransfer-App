@@ -4,6 +4,6 @@ import org.factory.design.annotations.Components;
 
 public interface Patterns {
 
-	public Factory getDesignPatternFactory(Class<?> typeObject, Components.DesignType designType);
+	public Factory getDesignPatternFactory(Components.DesignType designType);
 
 }

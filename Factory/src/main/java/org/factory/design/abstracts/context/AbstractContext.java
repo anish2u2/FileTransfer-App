@@ -4,7 +4,7 @@ import org.factory.design.contracts.Context;
 
 public abstract class AbstractContext implements Context {
 
-	public Object get() {
+	public Object[] get() {
 		return null;
 	}
 
